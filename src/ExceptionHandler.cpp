@@ -1,5 +1,5 @@
 /**
- *  Project SNOWPACK by Pavel SAMENE TIAH; FILE ExceptionHandler.cpp, GNU GENERAL PUBLIC LICENSE, May 2023
+ *  Project pMoon by Pavel SAMENE TIAH; FILE ExceptionHandler.cpp, GNU GENERAL PUBLIC LICENSE, May 2023
  * 
 */
 
