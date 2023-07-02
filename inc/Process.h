@@ -19,7 +19,7 @@ private:
     std::string command = std::string("");  // Command (and args) for the process
     std::string name = std::string("");     // Linux process name to monitor
     processRules_e rule = processRules_e::KILL;
-    uint64_t pid = 0;
+    uint64_t pid = -1;
 
 
 public:

@@ -20,7 +20,7 @@ private:
     std::string msg = std::string("");
 
 public:
-    ExceptionHandler(string msg, exceptionType_e type);
+    ExceptionHandler(string& msg, exceptionType_e type);
 
     const char * what () const throw ();
 

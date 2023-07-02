@@ -3,14 +3,14 @@
 #include "Daemon.h"
 #include "Process.h"
 
-bool checkArguments(const int argc, char const **argv, string& configFile);
+bool checkArguments(const int argc, char const **argv, string& configFile, uint32_t &scanfFrequency);
 void displayHelp();
 
 int main(int argc, char const **argv)
 {
     string configFilePath("");
-
-    bool argError = checkArguments(argc, argv, configFilePath);
+    uint32_t scanfFrequency = 0;
+    bool argError = checkArguments(argc, argv, configFilePath, scanfFrequency);
     if(argError)
     {
         displayHelp();
@@ -28,6 +28,10 @@ int main(int argc, char const **argv)
         }
         
         daemon->setAllPID();
+
+        // Minimum frequency allowed is 100 milliseconds
+        scanfFrequency = (scanfFrequency > 99) ? scanfFrequency : 100;
+        daemon->setFrequency(scanfFrequency);
         daemon->run();
     }
 
@@ -38,12 +42,13 @@ int main(int argc, char const **argv)
  * @brief check command line arguments from user
  * @return \c bool True if arguments are good, false otherwise
 */
-bool checkArguments(const int argc, char const **argv, string& configFile)
+bool checkArguments(const int argc, char const **argv, string& configFile, uint32_t& scanfFrequency)
 {
     bool argError = true;
-    if(argc == 2)
+    if(argc == 3)
     {
         configFile = string(argv[1]);
+        scanfFrequency = std::stoi(argv[2]);
         if(configFile.size())
         {
             argError = false;
@@ -64,6 +69,7 @@ void displayHelp()
 {
     std::cout << "\n\n**********" << std::endl;
     std::cout << "Usage:" << std::endl;
-    std::cout << "\t./pMoon   <config file>" << std::endl;
+    std::cout << "\t./pMoon   <config file> <scan frequency>" << std::endl;
+    std::cout << "<scan frequency> represents the time for pMoon to recheck all processes (in milliseconds). Minimun is 100 ms " << std::endl;
     std::cout << "**********" << std::endl;
 }

@@ -6,7 +6,7 @@
 #include <fstream>
 #include "Common.h"
 
-ExceptionHandler::ExceptionHandler(string msg, exceptionType_e type)
+ExceptionHandler::ExceptionHandler(string& msg, exceptionType_e type)
 {
     this->msg = std::string(__PRETTY_FUNCTION__);
     this->msg.append(": " + msg);
@@ -34,11 +34,11 @@ const char * ExceptionHandler::what () const throw ()
 */
 void ExceptionHandler::writeTologFile(const string &message)
 {
-    ofstream file("logs/log.log");
+    ofstream file("logs/log.log", std::ios_base::app);
 
     if(file.is_open())
     {
-        file << message;
+        file << message << std::endl;
         file.close();
     }
     else
